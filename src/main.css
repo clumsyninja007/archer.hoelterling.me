@@ -40,3 +40,13 @@ html {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/* Smooth color transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Disable transitions for PrimeVue components that might conflict */
+.p-component {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
