@@ -12,6 +12,6 @@ createApp(App)
       options: {
         darkModeSelector: '.dark',
       },
-    }
+    },
   })
   .mount('#app')

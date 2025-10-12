@@ -1,3 +1,4 @@
+<!--suppress CssUnresolvedCustomProperty -->
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import ToggleSwitch from 'primevue/toggleswitch';
@@ -61,7 +62,7 @@ function updateTheme() {
           />
         </div>
 
-        <Divider />
+        <Divider class="custom-divider" />
       </div>
       <div class="bg-surface-200 dark:bg-surface-600 flex-2 p-8">
         <h3 class="text-5xl font-bold">Work Experience</h3>
@@ -70,4 +71,12 @@ function updateTheme() {
   </main>
 </template>
 
-<style scoped></style>
+<style>
+.custom-divider:before {
+  border-top-color: var(--p-surface-900) !important;
+}
+
+.dark .custom-divider:before {
+  border-top-color: var(--p-surface-50) !important;
+}
+</style>
