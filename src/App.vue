@@ -6,6 +6,12 @@ import WorkExperienceSection from "@/components/WorkExperience/WorkExperienceSec
 import EducationSection from "@/components/Education/EducationSection.vue";
 import SkillsSection from "@/components/Skills/SkillsSection.vue";
 import ContactSection from "@/components/Contact/ContactSection.vue";
+
+const dividerPt = {
+  root: {
+    class: 'before:border-t-surface-900! dark:before:border-t-surface-50!'
+  }
+}
 </script>
 
 <template>
@@ -14,9 +20,9 @@ import ContactSection from "@/components/Contact/ContactSection.vue";
     <div class="max-w-6xl w-full flex shadow-md shadow-surface-300 dark:shadow-surface-900">
       <div class="bg-surface-300 dark:bg-surface-700 flex-1 p-8">
         <ContactSection />
-        <Divider class="custom-divider" />
+        <Divider :pt="dividerPt" />
         <EducationSection />
-        <Divider class="custom-divider" />
+        <Divider :pt="dividerPt" />
         <SkillsSection />
       </div>
       <div class="bg-surface-200 dark:bg-surface-600 flex-2 p-8">
@@ -26,12 +32,4 @@ import ContactSection from "@/components/Contact/ContactSection.vue";
   </main>
 </template>
 
-<style>
-.custom-divider:before {
-  border-top-color: var(--p-surface-900) !important;
-}
-
-.dark .custom-divider:before {
-  border-top-color: var(--p-surface-50) !important;
-}
-</style>
+<style scoped></style>
