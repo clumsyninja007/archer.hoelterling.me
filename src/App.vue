@@ -37,9 +37,73 @@ const {data, isLoading} = useQuery<WorkExperienceProps[]>({
             link="https://linkedin.com/in/archerharmony"
             icon="pi-linkedin"
           />
+          <LinkCard
+            label="Philadelphia, PA"
+            icon="pi-map-marker"
+          />
         </div>
 
         <Divider class="custom-divider" />
+
+        <h3 class="text-5xl font-bold">Education</h3>
+        <div class="mt-4">
+          <h4 class="text-xl font-semibold">Humboldt State University</h4>
+          <h5 class="font-light">Bachelor of Science<br />Computer Science</h5>
+          <h5 class="font-semibold">2012 - 2016</h5>
+        </div>
+
+        <Divider class="custom-divider" />
+
+        <h3 class="text-5xl font-bold">Skills</h3>
+        <div class="mt-4">
+          <ul class="ml-5.5 list-disc">
+            <li>
+              .NET Core
+            </li>
+            <li>
+              C#
+            </li>
+            <li>
+              JavaScript
+            </li>
+            <li>
+              TypeScript
+            </li>
+            <li>
+              React.js
+            </li>
+            <li>
+              Node.js
+            </li>
+            <li>
+              Vue.js
+            </li>
+            <li>
+              Microsoft SQL Server
+            </li>
+            <li>
+              MySql
+            </li>
+            <li>
+              Git
+            </li>
+            <li>
+              GitLab CI/CD
+            </li>
+            <li>
+              AWS
+            </li>
+            <li>
+              Agile Development
+            </li>
+            <li>
+              Python
+            </li>
+            <li>
+              PowerShell
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="bg-surface-200 dark:bg-surface-600 flex-2 p-8">
         <h3 class="text-5xl font-bold">Work Experience</h3>
