@@ -32,8 +32,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          source: "dist/."
+          source: "dist/"
           target: "/srv/www/archer.hoelterling.me"
+          strip_components: 1
 
       # Optional: restart or clean something remotely after deploy
       - name: Run remote post-deploy commands
