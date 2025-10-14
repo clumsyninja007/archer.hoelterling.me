@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/vue-query";
 import apiClient from "@/api/http.ts";
 import {onMounted, ref, watch} from "vue";
 import Skeleton from 'primevue/skeleton';
+import {PERSON_ID} from "@/constants.ts";
 
 interface PersonalInfo {
   name: string;
@@ -13,7 +14,7 @@ interface PersonalInfo {
 const {data, isLoading} = useQuery<PersonalInfo>({
   queryKey: ["personal"],
   queryFn: async () => {
-    const response = await apiClient.get('personal/1')
+    const response = await apiClient.get(`person/${PERSON_ID}`)
     return response.data
   }
 })
