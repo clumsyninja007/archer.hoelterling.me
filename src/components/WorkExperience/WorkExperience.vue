@@ -10,7 +10,7 @@ export interface WorkExperienceProps {
 
 const props = defineProps<WorkExperienceProps>();
 
-const formatDate = (value?: Date) => {
+const formatDate = (value?: string) => {
   if (!value) {
     return 'Present';
   }
