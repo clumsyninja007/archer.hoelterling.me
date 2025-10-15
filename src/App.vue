@@ -17,15 +17,15 @@ const dividerPt = {
 <template>
   <PageHeader />
   <main class="flex-1 flex justify-center">
-    <div class="max-w-6xl w-full flex shadow-md shadow-surface-300 dark:shadow-surface-900">
-      <div class="bg-surface-300 dark:bg-surface-700 flex-1 p-8">
+    <div class="max-w-6xl w-full flex flex-col-reverse md:flex-row shadow-md shadow-surface-300 dark:shadow-surface-900">
+      <div class="bg-surface-300 dark:bg-surface-700 p-8">
         <ContactSection />
         <Divider :pt="dividerPt" />
         <EducationSection />
         <Divider :pt="dividerPt" />
         <SkillsSection />
       </div>
-      <div class="bg-surface-200 dark:bg-surface-600 flex-2 p-8">
+      <div class="bg-surface-200 dark:bg-surface-600 p-8">
         <WorkExperienceSection />
       </div>
     </div>

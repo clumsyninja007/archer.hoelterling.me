@@ -61,8 +61,8 @@ function updateTheme() {
       </div>
     </template>
     <template v-else>
-      <h1 class="text-7xl font-semibold uppercase text-gray-100">{{data?.name}}</h1>
-      <h2 class="text-4xl mt-4 font-light uppercase text-gray-100">{{data?.title}}</h2>
+      <h1 class="font-semibold uppercase text-gray-100">{{data?.name}}</h1>
+      <h2 class="mt-4 font-light uppercase text-gray-100">{{data?.title}}</h2>
     </template>
   </header>
 </template>

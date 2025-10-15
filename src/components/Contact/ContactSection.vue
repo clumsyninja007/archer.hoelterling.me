@@ -4,7 +4,7 @@ import LinkCard from "@/components/LinkCard.vue";
 </script>
 
 <template>
-  <h3 class="text-5xl font-bold">Contact</h3>
+  <h3 class="font-bold">Contact</h3>
   <div class="flex flex-col gap-3 mt-4">
     <Chip label="+1 707-601-9915" icon="pi pi-phone" />
     <LinkCard

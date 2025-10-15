@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h3 class="text-5xl font-bold">Skills</h3>
+  <h3>Skills</h3>
   <div class="mt-4">
     <ul class="ml-5.5 list-disc">
       <li>

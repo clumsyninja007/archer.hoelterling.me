@@ -42,6 +42,46 @@ html {
   font-style: normal;
 }
 
+h1 {
+  @apply text-4xl;
+
+  @variant md {
+    @apply text-5xl;
+  }
+
+  @variant lg {
+    @apply text-7xl;
+  }
+}
+
+h2 {
+  @apply text-xl;
+
+  @variant md {
+    @apply text-2xl;
+  }
+
+  @variant lg {
+    @apply text-4xl;
+  }
+}
+
+h3 {
+  @apply font-bold text-xl;
+
+  @variant lg {
+    @apply text-3xl;
+  }
+}
+
+h4 {
+  @apply font-bold text-base;
+
+  @variant lg {
+    @apply text-xl;
+  }
+}
+
 /* Smooth color transitions for theme switching */
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;

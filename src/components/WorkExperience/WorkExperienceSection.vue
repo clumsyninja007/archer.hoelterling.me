@@ -17,7 +17,7 @@ const {data, isLoading} = useQuery<WorkExperienceProps[]>({
 </script>
 
 <template>
-  <h3 class="text-5xl font-bold">Work Experience</h3>
+  <h3 class="font-bold">Work Experience</h3>
   <WorkExperienceSkeleton v-if="isLoading" />
   <template v-else-if="!!data">
     <WorkExperience

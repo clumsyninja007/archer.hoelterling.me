@@ -3,8 +3,8 @@ export interface WorkExperienceProps {
   title: string;
   company: string;
   location: string;
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
   skills: string[];
 }
 
@@ -24,10 +24,10 @@ const formatDate = (value?: Date) => {
 
 <template>
   <div class="mt-4 p-4">
-    <h4 class="text-xl font-semibold">{{props.title}}</h4>
+    <h4 class="font-semibold">{{props.title}}</h4>
     <div class="flex justify-between mt-2">
       <div>
-        <h5 class="font-light">{{props.company}}</h5>
+        <h5 class="font-light mr-4">{{props.company}}</h5>
         <h6 class="font-light text-sm">{{props.location}}</h6>
       </div>
       <h5 class="font-semibold">{{formatDate(props.startDate)}} - {{formatDate(props.endDate)}}</h5>
