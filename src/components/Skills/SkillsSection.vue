@@ -1,56 +1,44 @@
 <script setup lang="ts">
+import {useQuery} from "@tanstack/vue-query";
+import apiClient from "@/api/http.ts";
+import {PERSON_ID} from "@/constants.ts";
+import Skeleton from "primevue/skeleton";
 
+const {data, isLoading} = useQuery<string[]>({
+  queryKey: ['personal', 'skills'],
+  queryFn: async () => {
+    const response = await apiClient.get(`person/${PERSON_ID}/skills`);
+    return response.data;
+  }
+})
+
+const skeletonPt = {
+  root: {
+    class: 'bg-surface-300! dark:bg-[var(--p-skeleton-background)]! inline-block! align-middle!'
+  }
+}
 </script>
 
 <template>
   <h3>Skills</h3>
   <div class="mt-4">
     <ul class="ml-5.5 list-disc">
-      <li>
-        .NET Core
-      </li>
-      <li>
-        C#
-      </li>
-      <li>
-        JavaScript
-      </li>
-      <li>
-        TypeScript
-      </li>
-      <li>
-        React.js
-      </li>
-      <li>
-        Node.js
-      </li>
-      <li>
-        Vue.js
-      </li>
-      <li>
-        Microsoft SQL Server
-      </li>
-      <li>
-        MySql
-      </li>
-      <li>
-        Git
-      </li>
-      <li>
-        GitLab CI/CD
-      </li>
-      <li>
-        AWS
-      </li>
-      <li>
-        Agile Development
-      </li>
-      <li>
-        Python
-      </li>
-      <li>
-        PowerShell
-      </li>
+      <template v-if="isLoading">
+        <li>
+          <Skeleton height="1rem" width="7rem" :pt="skeletonPt" />
+        </li>
+        <li>
+          <Skeleton height="1rem" width="7rem" :pt="skeletonPt" />
+        </li>
+        <li>
+          <Skeleton height="1rem" width="7rem" :pt="skeletonPt" />
+        </li>
+      </template>
+      <template v-else>
+        <li v-for="skill in data" :key="skill">
+          {{skill}}
+        </li>
+      </template>
     </ul>
   </div>
 </template>
