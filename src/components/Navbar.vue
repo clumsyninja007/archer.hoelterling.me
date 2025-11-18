@@ -48,7 +48,7 @@ const closeMobileMenu = () => {
 </script>
 
 <template>
-  <header class="border-b border-surface-300 dark:border-surface-700 bg-surface-100 dark:bg-surface-900 text-surface-900 dark:text-surface-50">
+  <header class="border-b border-surface-300 dark:border-surface-700 bg-surface-100 dark:bg-surface-900 text-surface-900 dark:text-surface-50 relative z-50">
     <nav class="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -74,7 +74,6 @@ const closeMobileMenu = () => {
               @click="toggleTheme"
               :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
             />
-            <Button icon="pi pi-code" severity="secondary" size="small" text aria-label="View source code" />
           </div>
         </div>
 
@@ -108,7 +107,7 @@ const closeMobileMenu = () => {
       <div
         v-show="isMobileMenuOpen"
         id="mobile-menu"
-        class="md:hidden fixed inset-x-0 top-[73px] bg-surface-100 dark:bg-surface-900 border-b border-surface-300 dark:border-surface-700 shadow-lg z-50"
+        class="md:hidden fixed inset-x-0 top-[73px] bg-surface-100 dark:bg-surface-900 border-b border-surface-300 dark:border-surface-700 shadow-lg z-40"
       >
         <div class="max-w-7xl mx-auto px-6 py-6 space-y-4">
           <router-link
@@ -143,7 +142,6 @@ const closeMobileMenu = () => {
           <div class="flex items-center gap-2 pt-4 border-t border-surface-300 dark:border-surface-700">
             <Button label="EN" severity="info" size="small" text aria-label="Switch to English" />
             <Button label="DE" severity="secondary" size="small" text aria-label="Switch to German" />
-            <Button icon="pi pi-code" severity="secondary" size="small" text aria-label="View source code" />
           </div>
         </div>
       </div>

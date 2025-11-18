@@ -6,7 +6,7 @@ import Footer from '@/components/Footer.vue'
 </script>
 
 <template>
-  <main class="min-h-screen bg-surface-50 dark:bg-surface-900 text-surface-900 dark:text-surface-50">
+  <main class="min-h-screen bg-surface-50 dark:bg-surface-950 text-surface-900 dark:text-surface-50">
     <HeroSection />
     <ProficienciesSection />
     <ProjectsSection />

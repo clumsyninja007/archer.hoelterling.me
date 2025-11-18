@@ -18,7 +18,7 @@ const { data, isLoading } = usePersonalInfo()
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col bg-surface-50 dark:bg-surface-900">
+  <div class="flex-1 flex flex-col bg-surface-50 dark:bg-surface-950">
     <header class="p-4 md:p-6 text-center bg-surface-800">
       <template v-if="isLoading">
         <div class="flex flex-col items-center gap-4">
