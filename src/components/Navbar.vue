@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import Button from 'primevue/button'
+import Drawer from 'primevue/drawer'
+import NavLinks, { type NavLink } from '@/components/NavLinks.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { usePersonalInfo } from '@/composables/usePersonalInfo'
 
 const { data } = usePersonalInfo()
 
 const isDark = ref<boolean>(false)
 const isMobileMenuOpen = ref<boolean>(false)
+
+const navLinks: NavLink[] = [
+  { label: 'Home', to: '/' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Resume', to: '/resume' },
+  { label: 'Contact', href: '/#contact' }
+]
 
 // Initialize theme
 onMounted(() => {
@@ -38,10 +48,6 @@ const toggleTheme = () => {
   isDark.value = !isDark.value
 }
 
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
@@ -52,20 +58,16 @@ const closeMobileMenu = () => {
     <nav class="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <i class="pi pi-briefcase text-blue-500 text-2xl" aria-hidden="true"></i>
+          <i class="pi pi-briefcase text-primary-500 text-2xl mr-4" aria-hidden="true"></i>
           <span class="text-xl font-bold">{{ data?.name || 'John Doe' }}</span>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-8">
-          <router-link to="/" class="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">Home</router-link>
-          <a href="/#projects" class="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">Projects</a>
-          <router-link to="/resume" class="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">Resume</router-link>
-          <a href="/#contact" class="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">Contact</a>
+          <NavLinks :links="navLinks" orientation="horizontal" />
 
           <div class="flex items-center gap-2 ml-4">
-            <Button label="EN" severity="info" size="small" text aria-label="Switch to English" />
-            <Button label="DE" severity="secondary" size="small" text aria-label="Switch to German" />
+            <LanguageSwitcher />
             <Button
               :icon="isDark ? 'pi pi-moon' : 'pi pi-sun'"
               severity="secondary"
@@ -88,94 +90,48 @@ const closeMobileMenu = () => {
             :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
           />
           <Button
-            :icon="isMobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
+            icon="pi pi-bars"
             severity="secondary"
             size="small"
             text
-            @click="toggleMobileMenu"
-            :aria-label="isMobileMenuOpen ? 'Close menu' : 'Open menu'"
-            :aria-expanded="isMobileMenuOpen"
-            aria-controls="mobile-menu"
+            @click="isMobileMenuOpen = true"
+            aria-label="Open menu"
           />
         </div>
       </div>
-
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <Transition name="mobile-menu">
-      <div
-        v-show="isMobileMenuOpen"
-        id="mobile-menu"
-        class="md:hidden fixed inset-x-0 top-[73px] bg-surface-100 dark:bg-surface-900 border-b border-surface-300 dark:border-surface-700 shadow-lg z-40"
-      >
-        <div class="max-w-7xl mx-auto px-6 py-6 space-y-4">
-          <router-link
-            to="/"
-            class="block py-2 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            @click="closeMobileMenu"
-          >
-            Home
-          </router-link>
-          <a
-            href="/#projects"
-            class="block py-2 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            @click="closeMobileMenu"
-          >
-            Projects
-          </a>
-          <router-link
-            to="/resume"
-            class="block py-2 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            @click="closeMobileMenu"
-          >
-            Resume
-          </router-link>
-          <a
-            href="/#contact"
-            class="block py-2 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            @click="closeMobileMenu"
-          >
-            Contact
-          </a>
-
-          <div class="flex items-center gap-2 pt-4 border-t border-surface-300 dark:border-surface-700">
-            <Button label="EN" severity="info" size="small" text aria-label="Switch to English" />
-            <Button label="DE" severity="secondary" size="small" text aria-label="Switch to German" />
-          </div>
+    <!-- Mobile Drawer Menu -->
+    <Drawer
+      v-model:visible="isMobileMenuOpen"
+      position="right"
+      class="w-full sm:w-80"
+      :pt="{
+        root: { class: 'md:hidden' },
+        header: { class: 'pb-4' },
+        content: { class: 'py-0' }
+      }"
+    >
+      <template #header>
+        <div class="flex items-center gap-2">
+          <i class="pi pi-briefcase text-primary-500 text-2xl mr-3" aria-hidden="true"></i>
+          <span class="text-xl font-bold">{{ data?.name || 'Menu' }}</span>
         </div>
-      </div>
-    </Transition>
+      </template>
+
+      <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
+        <NavLinks :links="navLinks" orientation="vertical" :on-link-click="closeMobileMenu" />
+
+        <div class="px-4 py-3 mt-4 border-t border-surface-300 dark:border-surface-700">
+          <LanguageSwitcher />
+        </div>
+      </nav>
+    </Drawer>
   </header>
 </template>
 
 <style scoped>
 a {
   text-decoration: none;
-}
-
-.mobile-menu-enter-active,
-.mobile-menu-leave-active {
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-}
-
-.mobile-menu-enter-from {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-.mobile-menu-enter-to {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.mobile-menu-leave-from {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.mobile-menu-leave-to {
-  transform: translateY(-100%);
-  opacity: 0;
 }
 </style>
