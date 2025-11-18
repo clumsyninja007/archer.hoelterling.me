@@ -30,10 +30,6 @@
   --color-primary-800: var(--p-primary-800);
   --color-primary-900: var(--p-primary-900);
   --color-primary-950: var(--p-primary-950);
-
-  /* Additional semantic colors */
-  --color-text: var(--p-text-color);
-  --color-muted: var(--p-text-muted-color);
 }
 
 html {
@@ -80,6 +76,12 @@ h4 {
   @variant lg {
     @apply text-xl;
   }
+}
+
+/* Override PrimeVue Card background in dark mode */
+.dark {
+  --p-card-background: var(--p-surface-700);
+  --p-card-border-color: var(--p-surface-700);
 }
 
 /* Smooth color transitions for theme switching - desktop only */

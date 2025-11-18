@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LinkCard from "@/components/LinkCard.vue";
-import type {ContactInfo} from "@/App.vue";
+import type { ContactInfo } from "@/composables/usePersonalInfo";
 
 interface ContactProps {
   isLoading?: boolean;

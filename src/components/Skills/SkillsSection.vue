@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import {useQuery} from "@tanstack/vue-query";
-import apiClient from "@/api/http.ts";
-import {PERSON_ID} from "@/constants.ts";
 import Skeleton from "primevue/skeleton";
+import { useSkills } from '@/composables/useSkills';
 
-const {data, isLoading} = useQuery<string[]>({
-  queryKey: ['personal', 'skills'],
-  queryFn: async () => {
-    const response = await apiClient.get(`person/${PERSON_ID}/skills`);
-    return response.data;
-  }
-})
+const { data, isLoading } = useSkills()
 
 const skeletonPt = {
   root: {
