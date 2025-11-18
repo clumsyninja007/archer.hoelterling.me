@@ -18,8 +18,11 @@ const props = defineProps<ProjectCardProps>()
 
 const isFlipped = ref(false)
 
-// Firefox has scrolling issues with 3D transforms, so use 2D animation instead
-const isFirefox = /firefox/i.test(navigator.userAgent)
+// Only use 3D transforms on desktop Chrome-based browsers
+// Other browsers have issues with 3D transform scroll
+const isChromeBased = /chrome|chromium|edg|opera/i.test(navigator.userAgent) && !/firefox/i.test(navigator.userAgent)
+const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent)
+const supports3D = isChromeBased && !isMobile
 
 const toggleFlip = () => {
   isFlipped.value = !isFlipped.value
@@ -33,8 +36,8 @@ const openLink = (url?: string) => {
 </script>
 
 <template>
-  <div class="project-card-container" :class="{ 'is-firefox': isFirefox }">
-    <div class="project-card" :class="{ 'is-flipped': isFlipped, 'is-firefox': isFirefox }">
+  <div class="project-card-container" :class="{ 'use-3d': supports3D }">
+    <div class="project-card" :class="{ 'is-flipped': isFlipped, 'use-3d': supports3D }">
       <!-- Front of Card -->
       <div class="project-card-face project-card-front">
         <Card class="h-full flex flex-col"
@@ -58,13 +61,13 @@ const openLink = (url?: string) => {
           </template>
           <template #content>
             <p class="text-surface-600 dark:text-surface-300 mb-4">{{ props.description }}</p>
-            <div class="flex flex-wrap gap-2 mb-4">
+            <div class="flex gap-2 overflow-x-auto md:flex-wrap mb-4">
               <Tag
                 v-for="tech in props.technologies"
                 :key="tech"
                 :value="tech"
                 severity="info"
-                class="text-sm"
+                class="text-sm flex-shrink-0"
               />
             </div>
             <div class="flex gap-2 flex-wrap mt-4">
@@ -168,8 +171,8 @@ const openLink = (url?: string) => {
   min-height: 500px;
 }
 
-/* Chrome/Safari: 3D flip with perspective */
-.project-card-container:not(.is-firefox) {
+/* Desktop Chrome-based browsers: 3D flip with perspective */
+.project-card-container.use-3d {
   perspective: 1000px;
 }
 
@@ -185,54 +188,54 @@ const openLink = (url?: string) => {
   height: 100%;
 }
 
-/* === CHROME/SAFARI: 3D FLIP ANIMATION === */
-.project-card:not(.is-firefox) {
+/* === DESKTOP CHROME: 3D FLIP ANIMATION === */
+.project-card.use-3d {
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
 
-.project-card:not(.is-firefox).is-flipped {
+.project-card.use-3d.is-flipped {
   transform: rotateY(180deg);
 }
 
-.project-card:not(.is-firefox) .project-card-face {
+.project-card.use-3d .project-card-face {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.project-card:not(.is-firefox) .project-card-front {
+.project-card.use-3d .project-card-front {
   transform: rotateY(0deg);
   z-index: 2;
 }
 
-.project-card:not(.is-firefox) .project-card-back {
+.project-card.use-3d .project-card-back {
   transform: rotateY(180deg);
 }
 
-/* === FIREFOX: 2D FADE/SCALE ANIMATION === */
-.project-card.is-firefox .project-card-face {
+/* === MOBILE/SAFARI/FIREFOX: 2D FADE/SCALE ANIMATION === */
+.project-card:not(.use-3d) .project-card-face {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.project-card.is-firefox .project-card-front {
+.project-card:not(.use-3d) .project-card-front {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
 }
 
-.project-card.is-firefox.is-flipped .project-card-front {
+.project-card:not(.use-3d).is-flipped .project-card-front {
   opacity: 0;
   transform: scale(0.95);
   pointer-events: none;
 }
 
-.project-card.is-firefox .project-card-back {
+.project-card:not(.use-3d) .project-card-back {
   opacity: 0;
   transform: scale(0.95);
   pointer-events: none;
 }
 
-.project-card.is-firefox.is-flipped .project-card-back {
+.project-card:not(.use-3d).is-flipped .project-card-back {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
