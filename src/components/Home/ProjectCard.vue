@@ -34,9 +34,14 @@ const openLink = (url?: string) => {
     <div class="project-card" :class="{ 'is-flipped': isFlipped }">
       <!-- Front of Card -->
       <div class="project-card-face project-card-front">
-        <Card class="h-full overflow-hidden">
+        <Card class="h-full flex flex-col"
+          :pt="{
+            body: { class: 'flex-1 flex flex-col' },
+            footer: { class: 'mt-auto' }
+          }"
+        >
           <template #header>
-            <div class="bg-surface-200 dark:bg-surface-700 h-48 flex items-center justify-center overflow-hidden">
+            <div class="bg-surface-200 dark:bg-surface-700 h-48 flex items-center justify-center overflow-hidden rounded-t-lg">
               <img
                 :src="props.image"
                 :alt="props.title"
@@ -59,23 +64,13 @@ const openLink = (url?: string) => {
                 class="text-sm"
               />
             </div>
-          </template>
-          <template #footer>
-            <div class="flex gap-2 flex-wrap">
-              <Button
-                label="More Details"
-                severity="secondary"
-                size="small"
-                outlined
-                icon="pi pi-info-circle"
-                @click="toggleFlip"
-                aria-label="View more details about this project"
-              />
+            <div class="flex gap-2 flex-wrap mt-4">
               <Button
                 v-if="props.liveUrl"
                 label="Live Site"
                 severity="info"
                 size="small"
+                icon="pi pi-external-link"
                 @click="() => openLink(props.liveUrl)"
               />
               <Button
@@ -84,16 +79,35 @@ const openLink = (url?: string) => {
                 severity="secondary"
                 size="small"
                 outlined
+                icon="pi pi-github"
                 @click="() => openLink(props.githubUrl)"
               />
             </div>
+          </template>
+          <template #footer>
+            <Button
+              label="More Details"
+              severity="secondary"
+              size="small"
+              outlined
+              icon="pi pi-info-circle"
+              class="w-full"
+              @click="toggleFlip"
+              aria-label="View more details about this project"
+            />
           </template>
         </Card>
       </div>
 
       <!-- Back of Card -->
       <div class="project-card-face project-card-back">
-        <Card class="h-full overflow-hidden">
+        <Card class="h-full"
+          :pt="{
+            root: { class: 'h-full flex flex-col' },
+            body: { class: 'flex-1 flex flex-col overflow-hidden' },
+            content: { class: 'flex-1 overflow-hidden' }
+          }"
+        >
           <template #title>
             <div class="flex items-center justify-between">
               <h3 class="text-xl font-semibold text-surface-900 dark:text-surface-50">{{ props.title }}</h3>
@@ -108,7 +122,7 @@ const openLink = (url?: string) => {
             </div>
           </template>
           <template #content>
-            <div class="space-y-4 overflow-y-auto max-h-[320px] pr-2 scrollable-content">
+            <div class="space-y-4 pr-2 overflow-y-auto h-full scrollable-content">
               <div>
                 <h4 class="font-semibold text-surface-900 dark:text-surface-50 mb-2">About This Project</h4>
                 <p class="text-surface-600 dark:text-surface-300 whitespace-pre-line">{{ props.longDescription }}</p>
@@ -129,33 +143,15 @@ const openLink = (url?: string) => {
             </div>
           </template>
           <template #footer>
-            <div class="flex gap-2 flex-wrap">
-              <Button
-                v-if="props.liveUrl"
-                label="Live Site"
-                severity="info"
-                size="small"
-                icon="pi pi-external-link"
-                @click="() => openLink(props.liveUrl)"
-              />
-              <Button
-                v-if="props.githubUrl"
-                label="GitHub"
-                severity="secondary"
-                size="small"
-                outlined
-                icon="pi pi-github"
-                @click="() => openLink(props.githubUrl)"
-              />
-              <Button
-                label="Back"
-                severity="secondary"
-                size="small"
-                outlined
-                icon="pi pi-arrow-left"
-                @click="toggleFlip"
-              />
-            </div>
+            <Button
+              label="Back"
+              severity="secondary"
+              size="small"
+              outlined
+              icon="pi pi-arrow-left"
+              class="w-full"
+              @click="toggleFlip"
+            />
           </template>
         </Card>
       </div>

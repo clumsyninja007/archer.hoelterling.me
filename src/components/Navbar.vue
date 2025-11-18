@@ -58,7 +58,7 @@ const closeMobileMenu = () => {
     <nav class="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <i class="pi pi-briefcase text-primary-500 text-2xl mr-4" aria-hidden="true"></i>
+          <i class="pi pi-briefcase text-primary-500 text-2xl mr-3" aria-hidden="true"></i>
           <span class="text-xl font-bold">{{ data?.name || 'John Doe' }}</span>
         </div>
 
