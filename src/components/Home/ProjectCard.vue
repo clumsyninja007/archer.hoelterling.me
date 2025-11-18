@@ -18,6 +18,9 @@ const props = defineProps<ProjectCardProps>()
 
 const isFlipped = ref(false)
 
+// Firefox has scrolling issues with 3D transforms, so use 2D animation instead
+const isFirefox = /firefox/i.test(navigator.userAgent)
+
 const toggleFlip = () => {
   isFlipped.value = !isFlipped.value
 }
@@ -30,8 +33,8 @@ const openLink = (url?: string) => {
 </script>
 
 <template>
-  <div class="project-card-container">
-    <div class="project-card" :class="{ 'is-flipped': isFlipped }">
+  <div class="project-card-container" :class="{ 'is-firefox': isFirefox }">
+    <div class="project-card" :class="{ 'is-flipped': isFlipped, 'is-firefox': isFirefox }">
       <!-- Front of Card -->
       <div class="project-card-face project-card-front">
         <Card class="h-full flex flex-col"
@@ -104,8 +107,8 @@ const openLink = (url?: string) => {
         <Card class="h-full"
           :pt="{
             root: { class: 'h-full flex flex-col' },
-            body: { class: 'flex-1 flex flex-col overflow-hidden' },
-            content: { class: 'flex-1 overflow-hidden' }
+            body: { class: 'flex-1 flex flex-col min-h-0' },
+            content: { class: 'flex-1 min-h-0' }
           }"
         >
           <template #title>
@@ -161,38 +164,78 @@ const openLink = (url?: string) => {
 
 <style scoped>
 .project-card-container {
-  perspective: 1000px;
   height: 100%;
   min-height: 500px;
+}
+
+/* Chrome/Safari: 3D flip with perspective */
+.project-card-container:not(.is-firefox) {
+  perspective: 1000px;
 }
 
 .project-card {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.project-card.is-flipped {
-  transform: rotateY(180deg);
 }
 
 .project-card-face {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+/* === CHROME/SAFARI: 3D FLIP ANIMATION === */
+.project-card:not(.is-firefox) {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.project-card:not(.is-firefox).is-flipped {
+  transform: rotateY(180deg);
+}
+
+.project-card:not(.is-firefox) .project-card-face {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.project-card-front {
-  z-index: 2;
+.project-card:not(.is-firefox) .project-card-front {
   transform: rotateY(0deg);
+  z-index: 2;
 }
 
-.project-card-back {
+.project-card:not(.is-firefox) .project-card-back {
   transform: rotateY(180deg);
+}
+
+/* === FIREFOX: 2D FADE/SCALE ANIMATION === */
+.project-card.is-firefox .project-card-face {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project-card.is-firefox .project-card-front {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.project-card.is-firefox.is-flipped .project-card-front {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.project-card.is-firefox .project-card-back {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.project-card.is-firefox.is-flipped .project-card-back {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 .scrollable-content {
