@@ -34,7 +34,7 @@ const navigateToResume = () => {
         <div class="w-64 h-64 rounded-full bg-surface-700 overflow-hidden">
           <img
             src="https://assets.archerharmony.com/archer-outdoor-selfie.jpeg"
-            alt="Profile"
+            :alt="`${personalData?.name || 'Professional'} headshot`"
             class="w-full h-full object-cover"
             @error="(e) => (e.target as HTMLImageElement).style.display = 'none'"
           />

@@ -12,7 +12,7 @@ const props = defineProps<LinkCardProps>();
 </script>
 
 <template>
-  <a v-if="!!props.link" :href="props.link" class="no-underline block" target="_blank" rel="noreferrer">
+  <a v-if="!!props.link" :href="props.link" class="no-underline block" target="_blank" rel="noopener noreferrer">
     <Chip
       :label="props.label"
       :icon="'pi ' + props.icon"

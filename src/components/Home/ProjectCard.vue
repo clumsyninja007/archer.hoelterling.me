@@ -69,6 +69,7 @@ const openLink = (url?: string) => {
                 outlined
                 icon="pi pi-info-circle"
                 @click="toggleFlip"
+                aria-label="View more details about this project"
               />
               <Button
                 v-if="props.liveUrl"

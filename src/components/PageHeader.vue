@@ -43,8 +43,8 @@ function updateTheme() {
 <template>
   <header class="p-6 text-center bg-surface-800">
     <div class="!absolute top-4 right-4 z-10 flex items-center gap-2">
-      <i :class="isDark ? 'pi pi-moon' : 'pi pi-sun'" class="text-white"></i>
-      <ToggleSwitch v-model="isDark" />
+      <i :class="isDark ? 'pi pi-moon' : 'pi pi-sun'" class="text-white" aria-hidden="true"></i>
+      <ToggleSwitch v-model="isDark" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'" />
     </div>
     <template v-if="props.isLoading">
       <div class="flex flex-col items-center gap-4">

@@ -34,8 +34,9 @@ const githubContact = computed(() => {
           v-if="emailContact"
           :href="emailContact.link || `mailto:${emailContact.label}`"
           class="text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200 flex items-center gap-2"
+          :aria-label="`Email ${emailContact.label}`"
         >
-          <i class="pi pi-envelope"></i>
+          <i class="pi pi-envelope" aria-hidden="true"></i>
           {{ emailContact.label }}
         </a>
         <a
@@ -44,8 +45,9 @@ const githubContact = computed(() => {
           target="_blank"
           rel="noopener noreferrer"
           class="text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
+          aria-label="LinkedIn profile"
         >
-          <i class="pi pi-linkedin text-xl"></i>
+          <i class="pi pi-linkedin text-xl" aria-hidden="true"></i>
         </a>
         <a
           v-if="githubContact"
@@ -53,8 +55,9 @@ const githubContact = computed(() => {
           target="_blank"
           rel="noopener noreferrer"
           class="text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
+          aria-label="GitHub profile"
         >
-          <i class="pi pi-github text-xl"></i>
+          <i class="pi pi-github text-xl" aria-hidden="true"></i>
         </a>
       </div>
     </div>
