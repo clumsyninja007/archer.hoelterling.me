@@ -19,21 +19,21 @@ const { data, isLoading } = usePersonalInfo()
 
 <template>
   <div class="flex-1 flex flex-col bg-surface-50 dark:bg-surface-900">
-    <header class="p-6 text-center bg-surface-800">
+    <header class="p-4 md:p-6 text-center bg-surface-800">
       <template v-if="isLoading">
         <div class="flex flex-col items-center gap-4">
-          <Skeleton height="4.5rem" width="30rem" />
-          <Skeleton height="2.5rem" width="20rem" />
+          <Skeleton height="4.5rem" class="w-full max-w-[30rem]" />
+          <Skeleton height="2.5rem" class="w-full max-w-[20rem]" />
         </div>
       </template>
       <template v-else>
-        <h1 class="font-semibold uppercase text-gray-100">{{data?.name}}</h1>
-        <h2 class="mt-4 font-light uppercase text-gray-100">{{data?.title}}</h2>
+        <h1 class="text-2xl md:text-4xl font-semibold uppercase text-gray-100">{{data?.name}}</h1>
+        <h2 class="mt-2 md:mt-4 text-lg md:text-2xl font-light uppercase text-gray-100">{{data?.title}}</h2>
       </template>
     </header>
-    <main class="flex-1 flex justify-center">
+    <main class="flex-1 flex justify-center px-4 md:px-0">
       <div class="max-w-6xl w-full flex flex-col-reverse md:flex-row shadow-md shadow-surface-300 dark:shadow-surface-900">
-        <div class="bg-surface-300 dark:bg-surface-700 p-8">
+        <div class="bg-surface-300 dark:bg-surface-700 p-4 md:p-8">
           <ContactSection
             :is-loading="isLoading"
             :contact-info="data?.contactInfo"
@@ -43,7 +43,7 @@ const { data, isLoading } = usePersonalInfo()
           <Divider :pt="dividerPt" />
           <SkillsSection />
         </div>
-        <div class="bg-surface-200 dark:bg-surface-600 p-8 w-full">
+        <div class="bg-surface-200 dark:bg-surface-600 p-4 md:p-8 w-full">
           <WorkExperienceSection />
         </div>
       </div>

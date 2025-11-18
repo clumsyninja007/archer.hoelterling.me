@@ -26,18 +26,18 @@ const githubContact = computed(() => {
 </script>
 
 <template>
-  <footer id="contact" class="border-t border-surface-300 dark:border-surface-700 mt-20">
-    <div class="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
-      <p class="text-surface-500 dark:text-surface-400">© {{ currentYear }} {{ personalData?.name || 'John Doe' }}. All rights reserved.</p>
-      <div class="flex items-center gap-6">
+  <footer id="contact" class="border-t border-surface-300 dark:border-surface-700 mt-12 md:mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+      <p class="text-surface-500 dark:text-surface-400 text-sm md:text-base text-center md:text-left">© {{ currentYear }} {{ personalData?.name || 'John Doe' }}. All rights reserved.</p>
+      <div class="flex items-center gap-4 md:gap-6">
         <a
           v-if="emailContact"
           :href="emailContact.link || `mailto:${emailContact.label}`"
           class="text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200 flex items-center gap-2"
           :aria-label="`Email ${emailContact.label}`"
         >
-          <i class="pi pi-envelope" aria-hidden="true"></i>
-          {{ emailContact.label }}
+          <i class="pi pi-envelope text-xl" aria-hidden="true"></i>
+          <span class="hidden sm:inline">{{ emailContact.label }}</span>
         </a>
         <a
           v-if="linkedinContact"
