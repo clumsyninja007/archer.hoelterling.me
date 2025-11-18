@@ -5,6 +5,7 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import {VueQueryPlugin} from "@tanstack/vue-query";
+import AnimateOnScroll from 'primevue/animateonscroll';
 
 import './main.css';
 import 'primeicons/primeicons.css'
@@ -38,4 +39,5 @@ createApp(App)
     },
   })
   .use(VueQueryPlugin)
+  .directive('animateonscroll', AnimateOnScroll)
   .mount('#app')

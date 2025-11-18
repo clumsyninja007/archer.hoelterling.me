@@ -11,6 +11,18 @@ interface Project {
   githubUrl?: string
 }
 
+const getZoomClass = (index: number): string => {
+  const row = Math.floor(index / 2)
+  const col = index % 2
+  const isEvenRow = row % 2 === 0
+
+  if (isEvenRow) {
+    return col === 0 ? 'zoom-in-75' : 'zoom-in-50'
+  } else {
+    return col === 0 ? 'zoom-in-50' : 'zoom-in-75'
+  }
+}
+
 const projects: Project[] = [
   {
     title: 'E-commerce Platform',
@@ -101,8 +113,11 @@ Used by 50+ companies and consistently rated as a top productivity tool. Helped 
     <h2 class="text-3xl font-bold mb-8">Featured Projects</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <ProjectCard
-        v-for="project in projects"
+        v-for="(project, index) in projects"
         :key="project.title"
+        v-animateonscroll="{
+          enterClass: `animate-enter fade-in-10 ${getZoomClass(index)} animate-duration-1000`,
+        }"
         :title="project.title"
         :description="project.description"
         :long-description="project.longDescription"

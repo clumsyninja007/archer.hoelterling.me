@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwindcss-primeui";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -76,12 +77,6 @@ h4 {
   @variant lg {
     @apply text-xl;
   }
-}
-
-/* Override PrimeVue Card background in dark mode */
-.dark {
-  --p-card-background: var(--p-surface-700);
-  --p-card-border-color: var(--p-surface-700);
 }
 
 /* Smooth color transitions for theme switching - desktop only */
