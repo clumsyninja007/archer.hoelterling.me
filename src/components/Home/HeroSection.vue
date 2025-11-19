@@ -12,7 +12,7 @@ const navigateToResume = () => {
 </script>
 
 <template>
-  <section class="bg-surface-800 text-surface-50 py-12 md:py-20">
+  <section class="bg-gradient-to-br from-cyan-600 via-cyan-700 to-cyan-900 dark:from-cyan-800 dark:via-cyan-900 dark:to-surface-950 text-surface-50 py-12 md:py-20">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
       <div class="flex-shrink-0 order-first md:order-last">
         <div class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-surface-700 overflow-hidden">
