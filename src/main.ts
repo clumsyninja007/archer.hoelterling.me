@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import i18n from './i18n'
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
@@ -30,6 +31,7 @@ const CustomPreset = definePreset(Aura, {
 
 createApp(App)
   .use(router)
+  .use(i18n)
   .use(PrimeVue, {
     theme: {
       preset: CustomPreset,

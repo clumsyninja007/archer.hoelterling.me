@@ -28,7 +28,7 @@ const githubContact = computed(() => {
 <template>
   <footer id="contact" class="border-t border-surface-300 dark:border-surface-700 mt-12 md:mt-20">
     <div class="max-w-7xl mx-auto px-6 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
-      <p class="text-surface-500 dark:text-surface-400 text-sm md:text-base text-center md:text-left">© {{ currentYear }} {{ personalData?.name || 'John Doe' }}. All rights reserved.</p>
+      <p class="text-surface-500 dark:text-surface-400 text-sm md:text-base text-center md:text-left">© {{ currentYear }} {{ personalData?.name || 'John Doe' }}. {{ $t('footer.rights') }}</p>
       <div class="flex items-center gap-4 md:gap-6">
         <a
           v-if="emailContact"

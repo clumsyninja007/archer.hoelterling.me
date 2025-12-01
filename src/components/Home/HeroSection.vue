@@ -27,14 +27,13 @@ const navigateToResume = () => {
 
       <div class="flex-1 text-center md:text-left md:pr-4">
         <h1 class="text-3xl md:text-5xl font-bold mb-4">
-          {{ personalData?.title || 'Senior Software Engineer & Problem Solver' }}
+          {{ personalData?.title }}
         </h1>
         <p class="text-surface-300 text-base md:text-lg mb-8 max-w-xl mx-auto md:mx-0">
-          With over 10 years of experience, I build scalable and efficient web
-          applications, turning complex problems into elegant software solutions.
+          {{ personalData?.heroDescription }}
         </p>
         <Button
-          label="View My Resume"
+          :label="$t('hero.ctaButton')"
           severity="info"
           size="large"
           @click="navigateToResume"

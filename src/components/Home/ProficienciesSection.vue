@@ -7,7 +7,7 @@ const { data: skills } = useSkills()
 
 <template>
   <section class="max-w-7xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold mb-8">Key Proficiencies</h2>
+    <h2 class="text-3xl font-bold mb-8">{{ $t('sections.proficiencies') }}</h2>
     <div class="flex flex-wrap gap-3">
       <Tag
         v-for="skill in skills"

@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "ctaButton": "View My Resume"
+  },
+  "nav": {
+    "home": "Home",
+    "resume": "Resume"
+  },
+  "sections": {
+    "proficiencies": "Key Proficiencies",
+    "projects": "Featured Projects",
+    "workExperience": "Work Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "messages": {
+    "noExperience": "No experience found",
+    "noEducation": "No education found",
+    "noSkills": "No skills found"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}

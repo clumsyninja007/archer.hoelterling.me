@@ -17,7 +17,7 @@ const {data, isLoading} = useQuery<WorkExperienceProps[]>({
 </script>
 
 <template>
-  <h3 class="font-bold">Work Experience</h3>
+  <h3 class="font-bold">{{ $t('sections.workExperience') }}</h3>
   <WorkExperienceSkeleton v-if="isLoading" />
   <template v-else-if="!!data">
     <WorkExperience
@@ -31,7 +31,7 @@ const {data, isLoading} = useQuery<WorkExperienceProps[]>({
       :skills="experience.skills"
     />
   </template>
-  <p v-else>No experience found</p>
+  <p v-else>{{ $t('messages.noExperience') }}</p>
 </template>
 
 <style scoped>

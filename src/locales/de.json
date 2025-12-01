@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "ctaButton": "Meinen Lebenslauf ansehen"
+  },
+  "nav": {
+    "home": "Startseite",
+    "resume": "Lebenslauf"
+  },
+  "sections": {
+    "proficiencies": "Hauptkompetenzen",
+    "projects": "Ausgewählte Projekte",
+    "workExperience": "Berufserfahrung",
+    "education": "Bildung",
+    "skills": "Fähigkeiten",
+    "contact": "Kontakt"
+  },
+  "messages": {
+    "noExperience": "Keine Erfahrung gefunden",
+    "noEducation": "Keine Bildung gefunden",
+    "noSkills": "Keine Fähigkeiten gefunden"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten"
+  }
+}

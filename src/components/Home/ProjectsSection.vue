@@ -110,7 +110,7 @@ Used by 50+ companies and consistently rated as a top productivity tool. Helped 
 
 <template>
   <section id="projects" class="max-w-7xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold mb-8">Featured Projects</h2>
+    <h2 class="text-3xl font-bold mb-8">{{ $t('sections.projects') }}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <ProjectCard
         v-for="(project, index) in projects"
