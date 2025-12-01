@@ -4,7 +4,9 @@
   },
   "nav": {
     "home": "Home",
-    "resume": "Resume"
+    "projects": "Projects",
+    "resume": "Resume",
+    "contact": "Contact"
   },
   "sections": {
     "proficiencies": "Key Proficiencies",

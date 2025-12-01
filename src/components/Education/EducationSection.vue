@@ -2,6 +2,7 @@
 import {useQuery} from "@tanstack/vue-query";
 import apiClient from "@/api/http.ts";
 import {PERSON_ID} from "@/constants.ts";
+import Skeleton from "primevue/skeleton";
 
 interface EducationProps {
   school: string;
@@ -31,7 +32,7 @@ const formatDate = (value?: string) => {
 </script>
 
 <template>
-  <h3 class="font-bold">Education</h3>
+  <h3 class="font-bold">{{ $t('sections.education') }}</h3>
   <template v-if="isLoading">
     <div class="mt-4">
       <skeleton width="60%" height="1.5rem" />

@@ -4,7 +4,9 @@
   },
   "nav": {
     "home": "Startseite",
-    "resume": "Lebenslauf"
+    "projects": "Projekte",
+    "resume": "Lebenslauf",
+    "contact": "Kontakt"
   },
   "sections": {
     "proficiencies": "Hauptkompetenzen",

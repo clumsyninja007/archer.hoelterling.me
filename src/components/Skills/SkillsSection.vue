@@ -12,7 +12,7 @@ const skeletonPt = {
 </script>
 
 <template>
-  <h3>Skills</h3>
+  <h3 class="font-bold">{{ $t('sections.skills') }}</h3>
   <div class="mt-4">
     <ul class="ml-5.5 list-disc">
       <template v-if="isLoading">

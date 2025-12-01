@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import Button from 'primevue/button'
 import Drawer from 'primevue/drawer'
 import NavLinks, { type NavLink } from '@/components/NavLinks.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { usePersonalInfo } from '@/composables/usePersonalInfo'
+import { useI18n } from 'vue-i18n'
 
 const { data } = usePersonalInfo()
+const { t } = useI18n()
 
 const isDark = ref<boolean>(false)
 const isMobileMenuOpen = ref<boolean>(false)
 
-const navLinks: NavLink[] = [
-  { label: 'Home', to: '/' },
-  { label: 'Projects', href: '/#projects' },
-  { label: 'Resume', to: '/resume' },
-  { label: 'Contact', href: '/#contact' }
-]
+const navLinks = computed<NavLink[]>(() => [
+  { label: t('nav.home'), to: '/' },
+  { label: t('nav.projects'), href: '/#projects' },
+  { label: t('nav.resume'), to: '/resume' },
+  { label: t('nav.contact'), href: '/#contact' }
+])
 
 // Initialize theme
 onMounted(() => {
