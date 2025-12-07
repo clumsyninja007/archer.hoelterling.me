@@ -19,7 +19,8 @@
   "messages": {
     "noExperience": "Keine Erfahrung gefunden",
     "noEducation": "Keine Bildung gefunden",
-    "noSkills": "Keine Fähigkeiten gefunden"
+    "noSkills": "Keine Fähigkeiten gefunden",
+    "noProjects": "Keine Projekte gefunden"
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten"

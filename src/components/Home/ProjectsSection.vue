@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import ProjectCard from './ProjectCard.vue'
+import { useProjects } from '@/composables/useProjects'
+import { computed } from 'vue'
 
-interface Project {
-  title: string
-  description: string
-  longDescription: string
-  technologies: string[]
-  image: string
-  liveUrl?: string
-  githubUrl?: string
-}
+const { data: projects, isLoading } = useProjects()
 
 const getZoomClass = (index: number): string => {
   const row = Math.floor(index / 2)
@@ -23,98 +17,23 @@ const getZoomClass = (index: number): string => {
   }
 }
 
-const projects: Project[] = [
-  {
-    title: 'E-commerce Platform',
-    description: 'A full-featured online store with a custom CMS and payment integration.',
-    longDescription: `This comprehensive e-commerce solution was built from the ground up to handle complex product catalogs and provide a seamless shopping experience.
-
-Key features include:
-• Custom CMS for product management
-• Integrated payment processing with Stripe
-• Real-time inventory tracking
-• Advanced search and filtering
-• Mobile-responsive design
-• Admin dashboard with analytics
-
-The platform successfully handles thousands of daily transactions and has helped the client increase their online revenue by 300%.`,
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'Redis'],
-    image: '/projects/ecommerce.png',
-    liveUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    title: 'Data Analytics Dashboard',
-    description: 'A real-time dashboard for visualizing complex business intelligence data.',
-    longDescription: `An enterprise-grade analytics platform designed to help businesses make data-driven decisions through intuitive visualizations and real-time insights.
-
-Key features include:
-• Real-time data streaming and updates
-• Interactive charts and graphs
-• Custom report generation
-• Multi-tenant architecture
-• Role-based access control
-• Export to PDF/Excel
-• Predictive analytics using ML models
-
-The dashboard processes over 10 million data points daily and serves 500+ active users across multiple departments.`,
-    technologies: ['Vue.js', 'Python', 'TensorFlow', 'PostgreSQL', 'WebSocket'],
-    image: '/projects/analytics.png',
-    liveUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    title: 'Mobile Banking App',
-    description: 'A secure and user-friendly mobile application for personal banking.',
-    longDescription: `A cross-platform mobile banking solution that prioritizes security and user experience, making banking accessible anytime, anywhere.
-
-Key features include:
-• Biometric authentication (Face ID/Touch ID)
-• Instant money transfers
-• Bill payment and scheduling
-• Mobile check deposit
-• Budget tracking and insights
-• ATM locator with maps
-• Push notifications for transactions
-• End-to-end encryption
-
-The app maintains a 4.8-star rating with over 100,000 downloads and has reduced customer service calls by 40%.`,
-    technologies: ['React Native', 'Firebase', 'Node.js', 'MongoDB', 'Plaid API'],
-    image: '/projects/banking.png',
-    liveUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    title: 'Project Management Tool',
-    description: 'A collaborative tool to help teams organize tasks and track progress.',
-    longDescription: `An all-in-one project management solution designed to streamline team collaboration and boost productivity across distributed teams.
-
-Key features include:
-• Kanban and Gantt chart views
-• Real-time collaboration
-• Time tracking and reporting
-• File sharing and version control
-• Integration with Slack, GitHub, and more
-• Customizable workflows
-• Sprint planning and retrospectives
-• Resource allocation tools
-
-Used by 50+ companies and consistently rated as a top productivity tool. Helped teams reduce project delivery time by an average of 25%.`,
-    technologies: ['Angular', 'GraphQL', 'NestJS', 'PostgreSQL', 'Docker'],
-    image: '/projects/project-mgmt.png',
-    liveUrl: '#',
-    githubUrl: '#'
-  }
-]
+const hasProjects = computed(() => projects.value && projects.value.length > 0)
 </script>
 
 <template>
   <section id="projects" class="max-w-7xl mx-auto px-6 py-16">
     <h2 class="text-3xl font-bold mb-8">{{ $t('sections.projects') }}</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Loading skeleton -->
+    <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div v-for="i in 4" :key="i" class="h-[500px] animate-pulse bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
+    </div>
+
+    <!-- Projects grid -->
+    <div v-else-if="hasProjects" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <ProjectCard
         v-for="(project, index) in projects"
-        :key="project.title"
+        :key="project.id"
         v-animateonscroll="{
           enterClass: `animate-enter fade-in-10 ${getZoomClass(index)} animate-duration-1000`,
         }"
@@ -122,11 +41,16 @@ Used by 50+ companies and consistently rated as a top productivity tool. Helped 
         :description="project.description"
         :long-description="project.longDescription"
         :technologies="project.technologies"
-        :image="project.image"
+        :image="project.imageUrl || '/projects/placeholder.png'"
         :live-url="project.liveUrl"
         :github-url="project.githubUrl"
       />
     </div>
+
+    <!-- No projects message -->
+    <p v-else class="text-center text-surface-600 dark:text-surface-300">
+      {{ $t('messages.noProjects') }}
+    </p>
   </section>
 </template>
 
