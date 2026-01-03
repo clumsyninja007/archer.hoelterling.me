@@ -35,6 +35,17 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # Clean old assets before deploying new ones
+      - name: Delete old assets from server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          script: |
+            rm -rf /srv/www/archer.hoelterling.me/*
+
       # Deploy built files (dist) via SCP
       - name: Copy built files to server
         uses: appleboy/scp-action@master
