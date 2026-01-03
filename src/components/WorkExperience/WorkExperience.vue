@@ -1,5 +1,6 @@
 <script setup lang="ts">
 export interface WorkExperienceProps {
+  id: number;
   title: string;
   company: string;
   location: string;
