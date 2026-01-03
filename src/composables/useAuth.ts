@@ -17,7 +17,7 @@ export interface UseAuth {
   user: Readonly<Ref<KeycloakProfile | null>>
   token: ComputedRef<string | undefined>
   keycloak: Keycloak | null
-  init: () => Promise<void>
+  init: (requireLogin?: boolean) => Promise<void>
   login: (redirectUri?: string) => Promise<void>
   logout: () => Promise<void>
   refreshToken: () => Promise<boolean>
@@ -52,14 +52,14 @@ export function useAuth(): UseAuth {
 
   const token = computed(() => keycloakInstance?.token)
 
-  async function init(): Promise<void> {
+  async function init(requireLogin = false): Promise<void> {
     if (isInitialized.value || !keycloakInstance) {
       return
     }
 
     try {
       const authenticated = await keycloakInstance.init({
-        onLoad: 'check-sso',
+        onLoad: requireLogin ? 'login-required' : 'check-sso',
         checkLoginIframe: false,
         pkceMethod: 'S256',
         silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'

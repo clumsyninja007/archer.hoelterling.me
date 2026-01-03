@@ -20,6 +20,8 @@ coverage
 .env.production
 .env.local
 
+IMPLEMENTATION_STATUS.md
+
 /cypress/videos/
 /cypress/screenshots/
 
