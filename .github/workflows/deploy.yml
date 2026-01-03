@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main  # or whichever branch you want to trigger deployment
+      - main
 
 jobs:
   build-and-deploy:
@@ -20,6 +20,17 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Create production environment file
+        run: |
+          cat > .env.production << EOF
+          VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
+          VITE_PERSON_ID=${{ secrets.VITE_PERSON_ID }}
+          VITE_KEYCLOAK_URL=${{ secrets.VITE_KEYCLOAK_URL }}
+          VITE_KEYCLOAK_REALM=${{ secrets.VITE_KEYCLOAK_REALM }}
+          VITE_KEYCLOAK_CLIENT_ID=${{ secrets.VITE_KEYCLOAK_CLIENT_ID }}
+          VITE_KEYCLOAK_ADMIN_ROLE=${{ secrets.VITE_KEYCLOAK_ADMIN_ROLE }}
+          EOF
 
       - name: Build project
         run: npm run build
