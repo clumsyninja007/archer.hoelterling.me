@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import {VueQueryPlugin} from "@tanstack/vue-query";
@@ -40,6 +41,7 @@ createApp(App)
       },
     },
   })
+  .use(ToastService)
   .use(VueQueryPlugin)
   .directive('animateonscroll', AnimateOnScroll)
   .mount('#app')

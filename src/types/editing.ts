@@ -9,6 +9,6 @@ export interface FieldConfig {
 }
 
 export interface EditFormData {
-  en: unknown
-  de: unknown
+  en: string
+  de: string
 }
