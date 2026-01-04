@@ -7,8 +7,8 @@ import { useUpdateWorkExperience } from '@/composables/mutations/useUpdateWorkEx
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
 import DatePicker from 'primevue/datepicker'
+import BilingualSkillsEditor from './BilingualSkillsEditor.vue'
 
 interface WorkExperienceData {
   title: string
@@ -109,69 +109,6 @@ const closeDialog = () => {
   emit('close')
 }
 
-const newSkillEn = ref('')
-const newSkillDe = ref('')
-const editingSkillIndex = ref<{ lang: 'en' | 'de'; index: number } | null>(null)
-const editingSkillValue = ref('')
-
-const addSkill = (lang: 'en' | 'de') => {
-  const skill = lang === 'en' ? newSkillEn.value : newSkillDe.value
-  if (!skill.trim()) return
-
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  skills.push(skill.trim())
-
-  if (lang === 'en') {
-    newSkillEn.value = ''
-  } else {
-    newSkillDe.value = ''
-  }
-}
-
-const removeSkill = (index: number, lang: 'en' | 'de') => {
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  skills.splice(index, 1)
-}
-
-const moveSkillUp = (index: number, lang: 'en' | 'de') => {
-  if (index === 0) return
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  const temp = skills[index]!
-  skills[index] = skills[index - 1]!
-  skills[index - 1] = temp
-}
-
-const moveSkillDown = (index: number, lang: 'en' | 'de') => {
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  if (index === skills.length - 1) return
-  const temp = skills[index]!
-  skills[index] = skills[index + 1]!
-  skills[index + 1] = temp
-}
-
-const startEditingSkill = (index: number, lang: 'en' | 'de') => {
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  editingSkillIndex.value = { lang, index }
-  editingSkillValue.value = skills[index]!
-}
-
-const saveEditingSkill = () => {
-  if (!editingSkillIndex.value || !editingSkillValue.value.trim()) {
-    cancelEditingSkill()
-    return
-  }
-
-  const { lang, index } = editingSkillIndex.value
-  const skills = lang === 'en' ? formData.en.skills : formData.de.skills
-  skills[index] = editingSkillValue.value.trim()
-  cancelEditingSkill()
-}
-
-const cancelEditingSkill = () => {
-  editingSkillIndex.value = null
-  editingSkillValue.value = ''
-}
-
 const handleSave = async () => {
   try {
     isLoading.value = true
@@ -183,6 +120,17 @@ const handleSave = async () => {
         summary: 'Validation Error',
         detail: 'Please fill in all required fields (Title, Company, Location)',
         life: 5000
+      })
+      return
+    }
+
+    // Validate that German doesn't have more skills than English
+    if (formData.de.skills.length > formData.en.skills.length) {
+      toast.add({
+        severity: 'error',
+        summary: 'Validation Error',
+        detail: `German cannot have more skills (${formData.de.skills.length}) than English (${formData.en.skills.length}). Remove extra German skills or add more English skills.`,
+        life: 7000
       })
       return
     }
@@ -307,82 +255,6 @@ const handleSave = async () => {
               <DatePicker v-model="formData.en.endDate" dateFormat="mm/yy" view="month" placeholder="Present" class="w-full" />
             </div>
           </div>
-
-          <div class="flex flex-col gap-2">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Skills
-            </label>
-            <div class="flex flex-col gap-2">
-              <div
-                v-for="(skill, index) in formData.en.skills"
-                :key="index"
-                class="flex items-center gap-2 p-2 rounded border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
-              >
-                <Textarea
-                  v-if="editingSkillIndex?.lang === 'en' && editingSkillIndex?.index === index"
-                  v-model="editingSkillValue"
-                  class="flex-1"
-                  rows="3"
-                  autoResize
-                  @keyup.enter.exact="saveEditingSkill"
-                  @keyup.escape="cancelEditingSkill"
-                  @blur="saveEditingSkill"
-                  autofocus
-                />
-                <span
-                  v-else
-                  class="flex-1 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
-                  @click="startEditingSkill(index, 'en')"
-                  title="Click to edit"
-                >{{ skill }}</span>
-                <div class="flex gap-1">
-                  <Button
-                    icon="pi pi-arrow-up"
-                    @click="moveSkillUp(index, 'en')"
-                    size="small"
-                    text
-                    rounded
-                    :disabled="index === 0"
-                    aria-label="Move up"
-                  />
-                  <Button
-                    icon="pi pi-arrow-down"
-                    @click="moveSkillDown(index, 'en')"
-                    size="small"
-                    text
-                    rounded
-                    :disabled="index === formData.en.skills.length - 1"
-                    aria-label="Move down"
-                  />
-                  <Button
-                    icon="pi pi-times"
-                    @click="removeSkill(index, 'en')"
-                    size="small"
-                    severity="danger"
-                    text
-                    rounded
-                    aria-label="Remove"
-                  />
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <Textarea
-                  v-model="newSkillEn"
-                  placeholder="Add skill"
-                  class="flex-1"
-                  rows="3"
-                  autoResize
-                  @keyup.enter.exact="addSkill('en')"
-                />
-                <Button
-                  icon="pi pi-plus"
-                  @click="addSkill('en')"
-                  size="small"
-                  aria-label="Add skill"
-                />
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- German Column -->
@@ -427,84 +299,14 @@ const handleSave = async () => {
               <DatePicker v-model="formData.de.endDate" dateFormat="mm/yy" view="month" placeholder="Heute" class="w-full" />
             </div>
           </div>
-
-          <div class="flex flex-col gap-2">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Fähigkeiten
-            </label>
-            <div class="flex flex-col gap-2">
-              <div
-                v-for="(skill, index) in formData.de.skills"
-                :key="index"
-                class="flex items-center gap-2 p-2 rounded border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
-              >
-                <Textarea
-                  v-if="editingSkillIndex?.lang === 'de' && editingSkillIndex?.index === index"
-                  v-model="editingSkillValue"
-                  class="flex-1"
-                  rows="3"
-                  autoResize
-                  @keyup.enter.exact="saveEditingSkill"
-                  @keyup.escape="cancelEditingSkill"
-                  @blur="saveEditingSkill"
-                  autofocus
-                />
-                <span
-                  v-else
-                  class="flex-1 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
-                  @click="startEditingSkill(index, 'de')"
-                  title="Zum Bearbeiten klicken"
-                >{{ skill }}</span>
-                <div class="flex gap-1">
-                  <Button
-                    icon="pi pi-arrow-up"
-                    @click="moveSkillUp(index, 'de')"
-                    size="small"
-                    text
-                    rounded
-                    :disabled="index === 0"
-                    aria-label="Nach oben"
-                  />
-                  <Button
-                    icon="pi pi-arrow-down"
-                    @click="moveSkillDown(index, 'de')"
-                    size="small"
-                    text
-                    rounded
-                    :disabled="index === formData.de.skills.length - 1"
-                    aria-label="Nach unten"
-                  />
-                  <Button
-                    icon="pi pi-times"
-                    @click="removeSkill(index, 'de')"
-                    size="small"
-                    severity="danger"
-                    text
-                    rounded
-                    aria-label="Entfernen"
-                  />
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <Textarea
-                  v-model="newSkillDe"
-                  placeholder="Fähigkeit hinzufügen"
-                  class="flex-1"
-                  rows="3"
-                  autoResize
-                  @keyup.enter.exact="addSkill('de')"
-                />
-                <Button
-                  icon="pi pi-plus"
-                  @click="addSkill('de')"
-                  size="small"
-                  aria-label="Hinzufügen"
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
+      <!-- Skills Section (Bilingual, Paired) -->
+      <BilingualSkillsEditor
+        v-model:en-skills="formData.en.skills"
+        v-model:de-skills="formData.de.skills"
+      />
     </div>
 
     <template #footer>

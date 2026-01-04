@@ -8,18 +8,21 @@ import WorkExperienceDialog from '@/components/Admin/WorkExperienceDialog.vue'
 import { useQuery } from "@tanstack/vue-query";
 import { useDeleteWorkExperience } from '@/composables/mutations/useDeleteWorkExperience'
 import { useAuth } from '@/composables/useAuth'
+import { useLanguage } from '@/composables/useLanguage'
 import { useToast } from 'primevue/usetoast'
 import apiClient from "@/api/http.ts";
 import { PERSON_ID } from "@/constants.ts";
 import Button from 'primevue/button'
 
 const { isAdmin } = useAuth()
+const { language } = useLanguage()
 const toast = useToast()
 const { mutateAsync: deleteExperience } = useDeleteWorkExperience()
 
 const { data, isLoading } = useQuery<WorkExperienceProps[]>({
-  queryKey: ['personal', 'experience'],
+  queryKey: ['personal', 'experience', language],
   queryFn: async () => {
+    // Language is sent via Accept-Language header in the axios interceptor
     const response = await apiClient.get(`person/${PERSON_ID}/experience`);
     return response.data;
   }

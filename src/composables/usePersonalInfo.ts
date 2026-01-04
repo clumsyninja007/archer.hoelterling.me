@@ -22,11 +22,8 @@ export function usePersonalInfo() {
   return useQuery<PersonalInfo>({
     queryKey: ['personal', language],
     queryFn: async () => {
-      const response = await apiClient.get(`person/${PERSON_ID}`, {
-        headers: {
-          'Accept-Language': language.value
-        }
-      })
+      // Accept-Language header is set automatically by axios interceptor
+      const response = await apiClient.get(`person/${PERSON_ID}`)
       return response.data
     }
   })

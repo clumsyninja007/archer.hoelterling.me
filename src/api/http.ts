@@ -9,10 +9,14 @@ const apiClient = axios.create({
   },
 })
 
-// Request interceptor - add Bearer token if authenticated
+// Request interceptor - add Bearer token and Accept-Language header
 apiClient.interceptors.request.use(
   async (config) => {
     const { isInitialized, isAuthenticated, token, refreshToken } = useAuth()
+
+    // Add Accept-Language header from localStorage (set by language switcher)
+    const language = localStorage.getItem('hoelterling-language') || 'en'
+    config.headers['Accept-Language'] = language
 
     // Only add auth if Keycloak has been initialized and user is authenticated
     if (isInitialized.value && isAuthenticated.value && token.value) {

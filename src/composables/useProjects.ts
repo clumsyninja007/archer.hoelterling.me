@@ -21,11 +21,8 @@ export function useProjects() {
   return useQuery<Project[]>({
     queryKey: ['projects', language],
     queryFn: async () => {
-      const response = await apiClient.get(`person/${PERSON_ID}/projects`, {
-        headers: {
-          'Accept-Language': language.value
-        }
-      })
+      // Accept-Language header is set automatically by axios interceptor
+      const response = await apiClient.get(`person/${PERSON_ID}/projects`)
       return response.data
     }
   })

@@ -9,11 +9,8 @@ export function useSkills() {
   return useQuery<string[]>({
     queryKey: ['personal', 'skills', language],
     queryFn: async () => {
-      const response = await apiClient.get(`person/${PERSON_ID}/skills`, {
-        headers: {
-          'Accept-Language': language.value
-        }
-      })
+      // Accept-Language header is set automatically by axios interceptor
+      const response = await apiClient.get(`person/${PERSON_ID}/skills`)
       return response.data
     }
   })
