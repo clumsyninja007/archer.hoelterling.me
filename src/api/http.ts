@@ -15,8 +15,11 @@ apiClient.interceptors.request.use(
     const { isInitialized, isAuthenticated, token, refreshToken } = useAuth()
 
     // Add Accept-Language header from localStorage (set by language switcher)
-    const language = localStorage.getItem('hoelterling-language') || 'en'
-    config.headers['Accept-Language'] = language
+    // Only if not already explicitly set by the caller
+    if (!config.headers['Accept-Language']) {
+      const language = localStorage.getItem('hoelterling-language') || 'en'
+      config.headers['Accept-Language'] = language
+    }
 
     // Only add auth if Keycloak has been initialized and user is authenticated
     if (isInitialized.value && isAuthenticated.value && token.value) {
