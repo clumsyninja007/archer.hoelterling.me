@@ -32,7 +32,7 @@ const { data, isLoading } = usePersonalInfo()
       </template>
     </header>
     <main class="flex-1 flex justify-center px-4 md:px-0">
-      <div class="max-w-6xl w-full flex flex-col-reverse md:flex-row shadow-md shadow-surface-300 dark:shadow-surface-900">
+      <div class="max-w-6xl w-full flex flex-col md:flex-row shadow-md shadow-surface-300 dark:shadow-surface-900">
         <div class="bg-surface-300 dark:bg-surface-700 p-4 md:p-8">
           <ContactSection
             :is-loading="isLoading"
