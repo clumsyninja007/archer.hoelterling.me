@@ -8,6 +8,7 @@ import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import {VueQueryPlugin} from "@tanstack/vue-query";
 import AnimateOnScroll from 'primevue/animateonscroll';
+import ConfirmationService from 'primevue/confirmationservice';
 
 import './main.css';
 import 'primeicons/primeicons.css'
@@ -43,5 +44,6 @@ createApp(App)
   })
   .use(ToastService)
   .use(VueQueryPlugin)
+  .use(ConfirmationService)
   .directive('animateonscroll', AnimateOnScroll)
   .mount('#app')

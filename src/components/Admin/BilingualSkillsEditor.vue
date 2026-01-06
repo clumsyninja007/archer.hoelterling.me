@@ -7,9 +7,14 @@ import Textarea from 'primevue/textarea'
 interface Props {
   enSkills: string[]
   deSkills: string[]
+  headerEn?: string
+  headerDe?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  headerEn: 'Skills',
+  headerDe: 'Fähigkeiten'
+})
 const emit = defineEmits<{
   'update:enSkills': [value: string[]]
   'update:deSkills': [value: string[]]
@@ -140,7 +145,7 @@ const cancelEditingSkill = () => {
 <template>
   <div class="flex flex-col gap-4">
     <h4 class="text-base font-semibold text-gray-900 dark:text-gray-100">
-      Skills / Fähigkeiten
+      {{ headerEn }} / {{ headerDe }}
     </h4>
 
     <!-- Existing Skills (Paired Display) -->

@@ -11,6 +11,7 @@ export interface Project {
   technologies: string[]
   imageUrl?: string
   liveUrl?: string
+  demoUrl?: string
   githubUrl?: string
   displayOrder: number
 }

@@ -11,6 +11,7 @@ interface ProjectCardProps {
   technologies: string[]
   image: string
   liveUrl?: string
+  demoUrl?: string
   githubUrl?: string
 }
 
@@ -78,6 +79,14 @@ const openLink = (url?: string) => {
                 size="small"
                 icon="pi pi-external-link"
                 @click="() => openLink(props.liveUrl)"
+              />
+              <Button
+                v-if="props.demoUrl"
+                label="Demo"
+                severity="success"
+                size="small"
+                icon="pi pi-play"
+                @click="() => openLink(props.demoUrl)"
               />
               <Button
                 v-if="props.githubUrl"
