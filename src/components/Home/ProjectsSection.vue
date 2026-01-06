@@ -117,8 +117,8 @@ const closeDialog = () => {
         v-for="(project, index) in projects"
         :key="project.id"
         class="relative group"
-        v-animateonscroll="{
-          enterClass: `animate-enter fade-in-10 ${getZoomClass(index)} animate-duration-1000`,
+        v-animateonscroll.once="{
+          enterClass: `animate-enter fade-in-10 ${getZoomClass(index)} animate-duration-1000`
         }"
       >
         <!-- Admin action buttons -->
