@@ -22,18 +22,6 @@ const confirm = useConfirm()
 const isDialogVisible = ref(false)
 const editingProject = ref<{ id: number; en: Project; de: Project } | null>(null)
 
-const getZoomClass = (index: number): string => {
-  const row = Math.floor(index / 2)
-  const col = index % 2
-  const isEvenRow = row % 2 === 0
-
-  if (isEvenRow) {
-    return col === 0 ? 'zoom-in-75' : 'zoom-in-50'
-  } else {
-    return col === 0 ? 'zoom-in-50' : 'zoom-in-75'
-  }
-}
-
 const hasProjects = computed(() => projects.value && projects.value.length > 0)
 
 const openCreateDialog = () => {
@@ -114,12 +102,9 @@ const closeDialog = () => {
     <!-- Projects grid -->
     <div v-else-if="hasProjects" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div
-        v-for="(project, index) in projects"
+        v-for="project in projects"
         :key="project.id"
         class="relative group"
-        v-animateonscroll.once="{
-          enterClass: `animate-enter fade-in-10 ${getZoomClass(index)} animate-duration-1000`
-        }"
       >
         <!-- Admin action buttons -->
         <div
