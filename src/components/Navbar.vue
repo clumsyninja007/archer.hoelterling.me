@@ -2,12 +2,13 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import Button from 'primevue/button'
 import Drawer from 'primevue/drawer'
+import Skeleton from 'primevue/skeleton'
 import NavLinks, { type NavLink } from '@/components/NavLinks.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { usePersonalInfo } from '@/composables/usePersonalInfo'
 import { useI18n } from 'vue-i18n'
 
-const { data } = usePersonalInfo()
+const { data, isPending, isError } = usePersonalInfo()
 const { t } = useI18n()
 
 const isDark = ref<boolean>(false)
@@ -61,7 +62,11 @@ const closeMobileMenu = () => {
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i class="pi pi-briefcase text-primary-500 text-2xl mr-3" aria-hidden="true"></i>
-          <span class="text-xl font-bold">{{ data?.name || 'John Doe' }}</span>
+          <Skeleton v-if="isPending" width="10rem" height="1.75rem" />
+          <span v-else-if="isError" class="text-xl font-bold text-red-500" aria-label="Error loading name">
+            Error
+          </span>
+          <span v-else class="text-xl font-bold">{{ data?.name }}</span>
         </div>
 
         <!-- Desktop Navigation -->
@@ -117,7 +122,11 @@ const closeMobileMenu = () => {
       <template #header>
         <div class="flex items-center gap-2">
           <i class="pi pi-briefcase text-primary-500 text-2xl mr-3" aria-hidden="true"></i>
-          <span class="text-xl font-bold">{{ data?.name || 'Menu' }}</span>
+          <Skeleton v-if="isPending" width="10rem" height="1.75rem" />
+          <span v-else-if="isError" class="text-xl font-bold text-red-500" aria-label="Error loading name">
+            Menu
+          </span>
+          <span v-else class="text-xl font-bold">{{ data?.name || 'Menu' }}</span>
         </div>
       </template>
 
