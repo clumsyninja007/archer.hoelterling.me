@@ -6,6 +6,7 @@ import WorkExperienceSection from "@/components/WorkExperience/WorkExperienceSec
 import EducationSection from "@/components/Education/EducationSection.vue";
 import SkillsSection from "@/components/Skills/SkillsSection.vue";
 import ContactSection from "@/components/Contact/ContactSection.vue";
+import LanguagesSection from "@/components/Languages/LanguagesSection.vue";
 import { usePersonalInfo } from '@/composables/usePersonalInfo';
 
 const dividerPt = {
@@ -42,6 +43,8 @@ const { data, isLoading } = usePersonalInfo()
           <EducationSection />
           <Divider :pt="dividerPt" />
           <SkillsSection />
+          <Divider :pt="dividerPt" />
+          <LanguagesSection />
         </div>
         <div class="bg-surface-200 dark:bg-surface-600 p-4 md:p-8 w-full">
           <WorkExperienceSection />

@@ -24,16 +24,16 @@ const formatDate = (value?: string) => {
 </script>
 
 <template>
-  <div class="mt-4 p-4">
+  <div class="mt-2 p-3">
     <h4 class="font-semibold">{{props.title}}</h4>
-    <div class="flex justify-between mt-2">
+    <div class="flex justify-between mt-1">
       <div>
         <h5 class="font-light mr-4">{{props.company}}</h5>
         <h6 class="font-light text-sm">{{props.location}}</h6>
       </div>
       <h5 class="font-semibold">{{formatDate(props.startDate)}} - {{formatDate(props.endDate)}}</h5>
     </div>
-    <ul class="mt-2 ml-5.5 list-disc">
+    <ul class="mt-1 ml-5.5 list-disc">
       <li v-for="skill in props.skills" :key="skill">
         {{skill}}
       </li>

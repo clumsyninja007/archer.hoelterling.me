@@ -14,7 +14,8 @@
     "workExperience": "Work Experience",
     "education": "Education",
     "skills": "Skills",
-    "contact": "Contact"
+    "contact": "Contact",
+    "languages": "Languages"
   },
   "messages": {
     "noExperience": "No experience found",
