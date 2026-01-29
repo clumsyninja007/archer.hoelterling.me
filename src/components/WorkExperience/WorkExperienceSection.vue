@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import WorkExperience, {
   type WorkExperienceProps
 } from "@/components/WorkExperience/WorkExperience.vue";
@@ -7,6 +7,7 @@ import WorkExperienceSkeleton from "@/components/WorkExperience/WorkExperienceSk
 import WorkExperienceDialog from '@/components/Admin/WorkExperienceDialog.vue'
 import { useQuery } from "@tanstack/vue-query";
 import { useDeleteWorkExperience } from '@/composables/mutations/useDeleteWorkExperience'
+import { useWorkExperienceBilingual } from '@/composables/useWorkExperienceBilingual'
 import { useAuth } from '@/composables/useAuth'
 import { useLanguage } from '@/composables/useLanguage'
 import { useToast } from 'primevue/usetoast'
@@ -29,15 +30,44 @@ const { data, isLoading } = useQuery<WorkExperienceProps[]>({
 })
 
 const isDialogVisible = ref(false)
-const editingExperience = ref<WorkExperienceProps | null>(null)
+const editingExperienceId = ref<number | null>(null)
+
+// Fetch bilingual data when editing
+const { data: bilingualData } = useWorkExperienceBilingual(editingExperienceId)
+
+// Compute initial data for dialog
+const dialogInitialData = computed(() => {
+  if (!editingExperienceId.value || !bilingualData.value) {
+    return undefined
+  }
+
+  return {
+    en: {
+      title: bilingualData.value.en.title,
+      company: bilingualData.value.en.company,
+      location: bilingualData.value.en.location,
+      startDate: new Date(bilingualData.value.en.startDate),
+      endDate: bilingualData.value.en.endDate ? new Date(bilingualData.value.en.endDate) : null,
+      skills: bilingualData.value.en.skills
+    },
+    de: {
+      title: bilingualData.value.de.title,
+      company: bilingualData.value.de.company,
+      location: bilingualData.value.de.location,
+      startDate: new Date(bilingualData.value.de.startDate),
+      endDate: bilingualData.value.de.endDate ? new Date(bilingualData.value.de.endDate) : null,
+      skills: bilingualData.value.de.skills
+    }
+  }
+})
 
 const openCreateDialog = () => {
-  editingExperience.value = null
+  editingExperienceId.value = null
   isDialogVisible.value = true
 }
 
 const openEditDialog = (experience: WorkExperienceProps) => {
-  editingExperience.value = experience
+  editingExperienceId.value = experience.id
   isDialogVisible.value = true
 }
 
@@ -128,25 +158,8 @@ const handleDelete = async (experienceId: number, title: string) => {
   <!-- Work Experience Dialog -->
   <WorkExperienceDialog
     v-model:visible="isDialogVisible"
-    :experience-id="editingExperience?.id"
-    :initial-data="editingExperience ? {
-      en: {
-        title: editingExperience.title,
-        company: editingExperience.company,
-        location: editingExperience.location,
-        startDate: new Date(editingExperience.startDate),
-        endDate: editingExperience.endDate ? new Date(editingExperience.endDate) : null,
-        skills: editingExperience.skills
-      },
-      de: {
-        title: editingExperience.title,
-        company: editingExperience.company,
-        location: editingExperience.location,
-        startDate: new Date(editingExperience.startDate),
-        endDate: editingExperience.endDate ? new Date(editingExperience.endDate) : null,
-        skills: editingExperience.skills
-      }
-    } : undefined"
+    :experience-id="editingExperienceId ?? undefined"
+    :initial-data="dialogInitialData"
     @close="isDialogVisible = false"
   />
 </template>
