@@ -149,7 +149,7 @@ const handleSave = async () => {
       },
       de: {
         title: formData.de.title,
-        company: formData.de.company,
+        company: formData.en.company, // Company is the same for both languages (proper noun)
         location: formData.de.location,
         startDate: formData.de.startDate?.toISOString() || new Date().toISOString(),
         endDate: formData.de.endDate?.toISOString() || undefined,
@@ -229,6 +229,7 @@ const handleSave = async () => {
           <div class="flex flex-col gap-2">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
               Company <span class="text-red-500">*</span>
+              <span class="text-xs text-gray-500 ml-2">(same for both languages)</span>
             </label>
             <InputText v-model="formData.en.company" placeholder="Tech Corp" />
           </div>
@@ -273,8 +274,9 @@ const handleSave = async () => {
           <div class="flex flex-col gap-2">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
               Firma <span class="text-red-500">*</span>
+              <span class="text-xs text-gray-500 ml-2">(gleich wie Englisch)</span>
             </label>
-            <InputText v-model="formData.de.company" placeholder="Tech Corp" />
+            <InputText v-model="formData.en.company" :disabled="true" placeholder="Tech Corp" class="opacity-60" />
           </div>
 
           <div class="flex flex-col gap-2">
