@@ -7,7 +7,7 @@ import WorkExperienceSkeleton from "@/components/WorkExperience/WorkExperienceSk
 import WorkExperienceDialog from '@/components/Admin/WorkExperienceDialog.vue'
 import { useQuery } from "@tanstack/vue-query";
 import { useDeleteWorkExperience } from '@/composables/mutations/useDeleteWorkExperience'
-import { useWorkExperienceBilingual } from '@/composables/useWorkExperienceBilingual'
+import { useWorkExperiencesBilingual } from '@/composables/useWorkExperiencesBilingual'
 import { useAuth } from '@/composables/useAuth'
 import { useLanguage } from '@/composables/useLanguage'
 import { useToast } from 'primevue/usetoast'
@@ -29,11 +29,11 @@ const { data, isLoading } = useQuery<WorkExperienceProps[]>({
   }
 })
 
+// Fetch bilingual data for all work experiences (used for editing)
+const { data: bilingualData } = useWorkExperiencesBilingual()
+
 const isDialogVisible = ref(false)
 const editingExperienceId = ref<number | null>(null)
-
-// Fetch bilingual data when editing
-const { data: bilingualData } = useWorkExperienceBilingual(editingExperienceId)
 
 // Compute initial data for dialog
 const dialogInitialData = computed(() => {
@@ -41,22 +41,30 @@ const dialogInitialData = computed(() => {
     return undefined
   }
 
+  // Find the experience in both EN and DE arrays
+  const enExperience = bilingualData.value.en.find(exp => exp.id === editingExperienceId.value)
+  const deExperience = bilingualData.value.de.find(exp => exp.id === editingExperienceId.value)
+
+  if (!enExperience || !deExperience) {
+    return undefined
+  }
+
   return {
     en: {
-      title: bilingualData.value.en.title,
-      company: bilingualData.value.en.company,
-      location: bilingualData.value.en.location,
-      startDate: new Date(bilingualData.value.en.startDate),
-      endDate: bilingualData.value.en.endDate ? new Date(bilingualData.value.en.endDate) : null,
-      skills: bilingualData.value.en.skills
+      title: enExperience.title,
+      company: enExperience.company,
+      location: enExperience.location,
+      startDate: new Date(enExperience.startDate),
+      endDate: enExperience.endDate ? new Date(enExperience.endDate) : null,
+      skills: enExperience.skills
     },
     de: {
-      title: bilingualData.value.de.title,
-      company: bilingualData.value.de.company,
-      location: bilingualData.value.de.location,
-      startDate: new Date(bilingualData.value.de.startDate),
-      endDate: bilingualData.value.de.endDate ? new Date(bilingualData.value.de.endDate) : null,
-      skills: bilingualData.value.de.skills
+      title: deExperience.title,
+      company: deExperience.company,
+      location: deExperience.location,
+      startDate: new Date(deExperience.startDate),
+      endDate: deExperience.endDate ? new Date(deExperience.endDate) : null,
+      skills: deExperience.skills
     }
   }
 })
